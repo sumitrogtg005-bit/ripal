@@ -1,0 +1,6 @@
+{"id":"ff808181a09d98f701a1b52af33d5b0d","name":"smoketracker","updatedAt":1794040955339,"data":{"active":[],"history":[]}}
+total 36
+drwxr-xr-x 2 root root  4096 Nov  7 08:41 .
+drwxr-xr-x 8 user user  4096 Nov  7 08:41 ..
+-rw-r--r-- 1 root root 13584 Nov  7 08:41 index.html
+-rw-r--r-- 1 root root  9694 Nov  7 08:41 styles.css

@@ -1,0 +1,14 @@
+HTTP/2 302 
+location: https://super.myninja.ai/404
+cache-control: private, no-cache, no-store, max-age=0, must-revalidate
+pragma: no-cache
+date: Sat, 07 Nov 2026 08:38:58 GMT
+x-cache: Miss from cloudfront
+via: 1.1 5b69cd230a06f482da15abd9c53bb694.cloudfront.net (CloudFront)
+x-amz-cf-pop: HIO52-P2
+x-amz-cf-id: ArC70kTJU_KUSy1jaYQ80dNLUYWQFBUQPF44Q_gpGZWid_lLYGCtRg==
+strict-transport-security: max-age=31536000; includeSubDomains; preload
+vary: Origin
+
+=== old 8080 ===
+302

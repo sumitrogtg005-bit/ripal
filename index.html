@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Tracker Merokok — Live Online</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div class="brand">
+      <div class="logo">🚬</div>
+      <div>
+        <h1>Tracker Merokok <span class="live-tag"><span class="live-dot"></span>LIVE</span></h1>
+        <p>Siapa yang sedang keluar merokok — dilihat semua orang, real-time</p>
+      </div>
+    </div>
+    <div class="clock">
+      <div class="time" id="clockTime">--:--:--</div>
+      <div class="date" id="clockDate">—</div>
+      <div class="tz">WIB / BANGKOK (UTC+7)</div>
+    </div>
+  </header>
+
+  <div id="connBar" class="conn-bar">
+    <span class="conn-dot"></span>
+    <span id="connText">Menghubungkan ke server…</span>
+  </div>
+
+  <!-- FORM -->
+  <section class="panel">
+    <h2><span class="dot"></span> Keluar Merokok</h2>
+    <div class="form-row">
+      <div class="field">
+        <label for="nameInput">Nama kamu</label>
+        <input type="text" id="nameInput" list="nameList" placeholder="Ketik / pilih nama lalu tekan Keluar…" autocomplete="off" />
+        <datalist id="nameList"></datalist>
+      </div>
+      <button class="btn btn-out" id="btnOut">🚬 Keluar Merokok</button>
+    </div>
+    <p class="hint">Tekan <b>Keluar Merokok</b> saat mulai, lalu tekan <b>Masuk</b> di kartu nama saat kembali. Semua orang yang membuka link ini melihat daftar yang sama.</p>
+  </section>
+
+  <!-- STATS -->
+  <div class="stat-row">
+    <div class="stat"><div class="num" id="statActive">0</div><div class="lbl">Sedang Merokok</div></div>
+    <div class="stat"><div class="num" id="statTotal">0</div><div class="lbl">Total Sesi</div></div>
+    <div class="stat"><div class="num" id="statAvg">0 mnt</div><div class="lbl">Rata-rata Durasi</div></div>
+  </div>
+
+  <!-- ACTIVE -->
+  <section class="panel">
+    <h2><span class="dot" style="background:var(--amber)"></span> Sedang Merokok Sekarang (di luar)</h2>
+    <div class="active-grid" id="activeGrid"></div>
+    <div class="empty" id="activeEmpty"><span class="big">🌙</span>Belum ada yang keluar merokok.</div>
+  </section>
+
+  <!-- HISTORY -->
+  <section class="panel">
+    <h2><span class="dot" style="background:var(--blue)"></span> Riwayat Selesai</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Tanggal</th>
+            <th>Nama</th>
+            <th>Jam Keluar</th>
+            <th>Jam Masuk</th>
+            <th>Durasi</th>
+          </tr>
+        </thead>
+        <tbody id="historyBody"></tbody>
+      </table>
+    </div>
+    <div class="empty" id="historyEmpty"><span class="big">📋</span>Belum ada riwayat sesi.</div>
+  </section>
+
+  <p class="footnote">Data tersimpan di server — semua orang yang membuka link melihat daftar yang sama secara real-time.</p>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ================= DATA NAMA ================= */
+const NAMES = [
+  "RIVAL SAMRA","DANIEL PANGIHUTAN","JOHAN JUNIANTO","KEVIN GIO","RESTU SHANDI LUBIS",
+  "RADEN ANGGER","YORIS GULTOM","AGHLAL DWI YULLIANTO","ABI RAFDI","KEVIN JIN","YUNITA",
+  "TEGAR RIFALDI","ILYAS SAPUTRA","FEBRI WAHYU ALAMSYAH","DESY SYAHWITRI","ISWAHYUDI NATA",
+  "MUHAMAD RIZAL","NUR AINI","WAHYUDIN FAHMI","NURHAYATI N","SUHENDI","JOHANDRI",
+  "MUHAMAD SHAFIQ","JESSYCA","DICKY WAHYUDI","MIKAEL","TENDI","RANGGA DIO ZAINI",
+  "AYUNDA EKA PUTRI","SUSANTO","MERISA","RIO FARRONA","GEDE EKA ANDI PERMANA",
+  "ABDURRASYID SHIDQISSALIM","SUMITRO FERNANDO T","DEDI PRIAMBUDI","MARIO CHANDRA",
+  "ALI MUKTI","JUHAR","YOPI","FACHRURROZZY","CHANTY","NANDA","JHONI","ABEDNEGO",
+  "BAYU AULIA PRATAMA","RANDHY","KARMENITA","DIKA ALIA AGUSTINA","MUHAMAD IMAM GOZALI",
+  "LYNDA SARTIKA"
+];
+
+let state = { active: [], history: [] };
+let lastRenderKey = "";
+
+/* ================= HELPERS ================= */
+const $ = (id) => document.getElementById(id);
+const pad = (n) => String(n).padStart(2, "0");
+
+function fmtTime(ts) {
+  const parts = new Intl.DateTimeFormat("en-GB", {
+    timeZone: "Asia/Jakarta", hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false
+  }).formatToParts(new Date(ts));
+  const get = (t) => parts.find(p => p.type === t)?.value || "00";
+  return `${get("hour")}:${get("minute")}:${get("second")}`;
+}
+function fmtDate(ts) {
+  return new Intl.DateTimeFormat("id-ID", {
+    timeZone: "Asia/Jakarta", weekday: "long", day: "2-digit", month: "long", year: "numeric"
+  }).format(new Date(ts));
+}
+function fmtFullDate(ts) {
+  return new Intl.DateTimeFormat("id-ID", {
+    timeZone: "Asia/Jakarta", day: "2-digit", month: "long", year: "numeric"
+  }).format(new Date(ts));
+}
+function fmtDayDate(ts) {
+  return new Intl.DateTimeFormat("id-ID", {
+    timeZone: "Asia/Jakarta", weekday: "short", day: "2-digit", month: "short", year: "numeric"
+  }).format(new Date(ts));
+}
+function fmtDur(ms) {
+  const totalSec = Math.max(0, Math.floor(ms / 1000));
+  const h = Math.floor(totalSec / 3600);
+  const m = Math.floor((totalSec % 3600) / 60);
+  const s = totalSec % 60;
+  if (h > 0) return `${h}j ${pad(m)}m ${pad(s)}d`;
+  return `${pad(m)}:${pad(s)}`;
+}
+function fmtMinutes(ms) {
+  const mins = ms / 60000;
+  return mins < 1 ? "< 1 mnt" : `${mins.toFixed(1)} mnt`;
+}
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+}
+
+/* ================= TOAST ================= */
+let toastTimer;
+function toast(msg, type = "ok") {
+  const el = $("toast");
+  el.textContent = msg;
+  el.className = "toast show " + type;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { el.className = "toast " + type; }, 3000);
+}
+
+/* ================= CONNECTION STATUS ================= */
+function setConn(online, text) {
+  const bar = $("connBar");
+  bar.className = "conn-bar " + (online ? "online" : "offline");
+  $("connText").textContent = text;
+}
+
+/* ================= API ================= */
+async function api(path, body) {
+  const opts = body
+    ? { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) }
+    : { method: "GET" };
+  const res = await fetch(path, opts);
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(data.error || "Terjadi kesalahan pada server.");
+  return data;
+}
+
+/* ================= ACTIONS ================= */
+async function keluar() {
+  const input = $("nameInput");
+  const name = input.value.trim().replace(/\s+/g, " ").toUpperCase();
+  if (!name) { toast("Isi nama dulu ya!", "err"); input.focus(); return; }
+  const btn = $("btnOut");
+  btn.disabled = true;
+  try {
+    const res = await api("/api/out", { name });
+    state = res.state;
+    input.value = "";
+    render(true);
+    toast(`🚬 ${name} keluar merokok — ${fmtTime(res.entry.outAt)}`, "ok");
+  } catch (e) {
+    toast(e.message, "err");
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+async function masuk(name) {
+  try {
+    const res = await api("/api/in", { name });
+    state = res.state;
+    render(true);
+    toast(`✅ ${name} kembali — durasi ${fmtMinutes(res.record.durationMs)}`, "ok");
+  } catch (e) {
+    toast(e.message, "err");
+  }
+}
+
+/* ================= RENDER ================= */
+function render(force = false) {
+  const key = JSON.stringify(state);
+  if (!force && key === lastRenderKey) return;
+  lastRenderKey = key;
+
+  const grid = $("activeGrid");
+  grid.innerHTML = "";
+  $("activeEmpty").style.display = state.active.length ? "none" : "block";
+
+  state.active.forEach((a) => {
+    const card = document.createElement("div");
+    card.className = "smoke-card";
+    card.innerHTML = `
+      <div class="name">
+        <span>${escapeHtml(a.name)}</span>
+        <span class="badge"><span class="blink"></span>Di Luar</span>
+      </div>
+      <div class="timer" data-timer="${a.outAt}">--:-- <small>menit:detik</small></div>
+      <div class="meta">
+        <span>Tanggal: <b>${fmtFullDate(a.outAt)}</b></span>
+        <span>Keluar: <b>${fmtTime(a.outAt)}</b></span>
+      </div>
+      <div class="meta">
+        <span>Durasi: <b data-min="${a.outAt}">—</b></span>
+      </div>
+      <div class="actions">
+        <button class="btn btn-in" data-in="${escapeHtml(a.name)}">🚪 Masuk</button>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+
+  const body = $("historyBody");
+  body.innerHTML = "";
+  $("historyEmpty").style.display = state.history.length ? "none" : "block";
+
+  state.history.forEach((h) => {
+    const mins = h.durationMs / 60000;
+    let cls = "";
+    if (mins >= 30) cls = "long";
+    else if (mins >= 15) cls = "warn";
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td class="mono" style="color:var(--muted);white-space:nowrap;">${fmtDayDate(h.outAt)}</td>
+      <td class="name-cell">${escapeHtml(h.name)}</td>
+      <td class="mono">${fmtTime(h.outAt)}</td>
+      <td class="mono">${fmtTime(h.inAt)}</td>
+      <td><span class="dur-pill ${cls}">${fmtMinutes(h.durationMs)}</span></td>
+    `;
+    body.appendChild(tr);
+  });
+
+  $("statActive").textContent = state.active.length;
+  $("statTotal").textContent = state.history.length;
+  if (state.history.length) {
+    const avg = state.history.reduce((s, h) => s + h.durationMs, 0) / state.history.length;
+    $("statAvg").textContent = `${(avg / 60000).toFixed(1)} mnt`;
+  } else {
+    $("statAvg").textContent = "0 mnt";
+  }
+
+  tick();
+}
+
+/* ================= LIVE TIMERS ================= */
+function tick() {
+  const now = Date.now();
+  $("clockTime").textContent = fmtTime(now);
+  $("clockDate").textContent = fmtDate(now);
+
+  document.querySelectorAll("[data-timer]").forEach(el => {
+    const outAt = Number(el.dataset.timer);
+    el.innerHTML = `${fmtDur(now - outAt)} <small>menit:detik</small>`;
+  });
+  document.querySelectorAll("[data-min]").forEach(el => {
+    const outAt = Number(el.dataset.min);
+    el.textContent = fmtMinutes(now - outAt);
+  });
+}
+
+/* ================= REALTIME (SSE) ================= */
+function connectStream() {
+  if (!window.EventSource) { pollLoop(); return; }
+  const es = new EventSource("/api/stream");
+
+  es.onopen = () => setConn(true, "Terhubung — data live dari server");
+  es.onmessage = (ev) => {
+    try {
+      state = JSON.parse(ev.data);
+      setConn(true, "Terhubung — data live dari server");
+      render(true);
+    } catch (e) { /* ignore */ }
+  };
+  es.onerror = () => {
+    setConn(false, "Koneksi terputus — mencoba menyambung ulang…");
+  };
+}
+
+async function pollLoop() {
+  try {
+    state = await api("/api/state");
+    setConn(true, "Terhubung — data live dari server");
+    render(true);
+  } catch (e) {
+    setConn(false, "Koneksi terputus — mencoba menyambung ulang…");
+  }
+  setTimeout(pollLoop, 3000);
+}
+
+/* ================= INIT ================= */
+function init() {
+  const dl = $("nameList");
+  NAMES.forEach(n => {
+    const o = document.createElement("option");
+    o.value = n;
+    dl.appendChild(o);
+  });
+
+  $("btnOut").addEventListener("click", keluar);
+  $("nameInput").addEventListener("keydown", e => { if (e.key === "Enter") keluar(); });
+  $("activeGrid").addEventListener("click", e => {
+    const btn = e.target.closest("[data-in]");
+    if (btn) masuk(btn.dataset.in);
+  });
+
+  tick();
+  setInterval(tick, 1000);
+  connectStream();
+
+  setInterval(async () => {
+    try {
+      const fresh = await api("/api/state");
+      state = fresh;
+      render();
+    } catch (e) { /* ignore */ }
+  }, 15000);
+}
+
+document.addEventListener("DOMContentLoaded", init);
+</script>
+</body>
+</html>

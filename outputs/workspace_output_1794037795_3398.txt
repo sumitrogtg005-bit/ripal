@@ -1,0 +1,13 @@
+Interactive elements (5):
+  [0] input type="text"
+  [1] button "🚬 Keluar Merokok"
+  [2] button "🚪 Masuk"
+  [3] button "🚪 Masuk"
+  [4] button "🗑️ Hapus Semua Riwayat"
+
+Accessibility tree:
+Page text: 🚬 Tracker Merokok Catat waktu keluar & masuk — hitung durasi menit 14:49:56 Sabtu, 07 November 2026 WIB / BANGKOK (UTC+7) KELUAR MEROKOK Nama kamu 🚬 Keluar Merokok Tekan Keluar Merokok saat mulai, lalu tekan Masuk di kartu nama saat kembali. Waktu otomatis memakai jam WIB / Bangkok. 2 SEDANG MEROKOK 0 TOTAL SESI 0 mnt RATA-RATA DURASI SEDANG MEROKOK (DI LUAR) RIVAL SAMRA DI LUAR 00:24 menit:detik Keluar: 14:49:32 Durasi: < 1 mnt 🚪 Masuk KEVIN GIO DI LUAR 00:21 menit:detik Keluar: 14:49:34 Durasi: < 1 mnt 🚪 Masuk RIWAYAT SELESAI NAMA JAM KELUAR JAM MASUK DURASI AKSI 📋 Belum ada riwayat sesi. 🗑️ Hapus Semua Riwayat Data tersimpan otomatis di browser ini (localStorage). 🚬 KEVIN GIO keluar merokok — 14:49:34
+
+Screenshot: /workspace/.screenshots/step_008.png
+Use see-image to view: /workspace/.screenshots/step_008.png
+=== END ===

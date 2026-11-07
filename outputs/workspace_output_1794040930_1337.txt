@@ -1,0 +1,7 @@
+Interactive elements (3):
+  [0] input type="text"
+  [1] button "🚬 Keluar Merokok"
+  [2] button "🚪 Masuk"
+
+Accessibility tree:
+Page text: 🚬 Tracker Merokok LIVE Siapa yang sedang keluar merokok — dilihat semua orang, real-time 15:42:11 Sabtu, 07 November 2026 WIB / BANGKOK (UTC+7) Terhubung — data live dari server bersama KELUAR MEROKOK Nama kamu 🚬 Keluar Merokok Tekan Keluar Merokok saat mulai, lalu tekan Masuk di kartu nama saat kembali. Semua orang yang membuka link ini melihat daftar yang sama. 1 SEDANG MEROKOK 0 TOTAL SESI 0 mnt RATA-RATA DURASI SEDANG MEROKOK SEKARANG (DI LUAR) RIVAL SAMRA DI LUAR 00:11 menit:detik Tanggal: 07 November 2026 Keluar: 15:42:00 Durasi: < 1 mnt 🚪 Masuk RIWAYAT SELESAI TANGGAL NAMA JAM KELUAR JAM MASUK DURASI 📋 Belum ada riwayat sesi. Data tersimpan online di server bersama — semua orang yang membuka link melihat daftar yang sama. Diperbarui otomatis tiap 3 detik. 🚬 RIVAL SAMRA keluar merokok — 15:42:00

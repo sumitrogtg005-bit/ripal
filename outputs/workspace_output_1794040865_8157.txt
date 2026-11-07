@@ -1,0 +1,23 @@
+== extendsclass ==
+HTTP/2 201 
+date: Sat, 07 Nov 2026 08:41:05 GMT
+content-type: text/html; charset=UTF-8
+x-powered-by: PHP/8.2
+access-control-allow-origin: *
+x-frame-options: SAMEORIGIN
+cache-control: max-age=7200
+expires: Sat, 07 Nov 2026 10:41:05 GMT
+x-xss-protection: 1; mode=block
+x-content-type-options: nosniff
+age: 0
+x-cdn-cache: MISS
+
+== textdb ==
+HTTP/2 200 
+date: Sat, 07 Nov 2026 08:41:06 GMT
+content-type: text/plain;charset=UTF-8
+server: cloudflare
+nel: {"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}
+vary: Accept-Encoding
+access-control-allow-origin: *
+report-to: {"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=TE9niXQGaACKuAxJ7QWdi6FXNdkbJko1fX4hkS65KcPR1OQtToukGGnlA5TpIBS4ezV7ne6Kh5HugTFBs5q%2BjIgRV%2FcL49K0L52QYerP871A9sCerBJqsn7KJcUCv6Ea"}]}

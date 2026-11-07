@@ -1,0 +1,35 @@
+== getpantry ==
+HTTP/2 404 
+date: Sat, 07 Nov 2026 08:40:49 GMT
+content-type: text/html; charset=utf-8
+server: cloudflare
+x-frame-options: SAMEORIGIN
+x-frame-options: SAMEORIGIN
+access-control-allow-origin: *
+x-dns-prefetch-control: off
+strict-transport-security: max-age=15552000; includeSubDomains
+x-download-options: noopen
+x-content-type-options: nosniff
+x-xss-protection: 1; mode=block
+content-security-policy: default-src 'none'
+nel: {"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}
+report-to: {"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=VHTZlEV1PZF3wJ%2Bht40pKIN0Gwq2A3%2BlNra%2BZHyiR1Z%2BQrwEL%2Fnsu7i4jN5i%2FPBlHXW04BdU1nKoTRWnnvQvsfYIEZlkOHiR7N9OCIYWQXwOILUz7OvviM7eyyFQNG7KfDA%3D"}]}
+cf-cache-status: DYNAMIC
+cf-ray: a56b090cabeeff09-PDX
+alt-svc: h3=":443"; ma=86400
+
+<!DOCTYPE html>
+
+== restful-api ==
+HTTP/2 200 
+date: Sat, 07 Nov 2026 08:40:50 GMT
+content-type: application/json;charset=UTF-8
+server: cloudflare
+nel: {"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}
+vary: Origin
+vary: Access-Control-Request-Method
+vary: Access-Control-Request-Headers
+x-content-type-options: nosniff
+x-xss-protection: 1; mode=block
+cache-control: no-cache, no-store, max-age=0, must-revalidate
+pragma: no-cache

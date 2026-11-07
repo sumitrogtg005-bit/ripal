@@ -1,0 +1,13 @@
+== kvdb retry ==
+email required: set email=user@example.com when creating the bucket
+== kvdb with body ==
+email required: set email=user@example.com when creating the bucket
+== kvdb GET test ==
+HTTP/2 404 
+server: Fly/366e4bf88 (2026-10-27)
+date: Sat, 07 Nov 2026 08:40:58 GMT
+content-type: text/plain; charset=UTF-8
+content-length: 20
+x-xss-protection: 1; mode=block
+access-control-allow-origin: *
+strict-transport-security: max-age=31536000; includeSubDomains; preload

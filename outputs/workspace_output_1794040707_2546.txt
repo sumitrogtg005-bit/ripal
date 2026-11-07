@@ -1,0 +1,7 @@
+1) OUT:
+{"ok":true,"entry":{"name":"RIVAL SAMRA","outAt":1794040707269,"id":"1794040707269-qidxf3"},"state":{"active":[{"name":"RIVAL SAMRA","outAt":1794040707269,"id":"1794040707269-qidxf3"}],"history":[]}}
+2) OUT lagi (harus ditolak):
+{"ok":false,"error":"RIVAL SAMRA sudah tercatat sedang merokok sejak 2026-11-07T08:38:27.269Z."}
+3) OUT KEVIN:
+4) IN RIVAL:
+{"ok":true,"record":{"name":"RIVAL SAMRA","outAt":1794040707269,"inAt":1794040710289,"durationMs":3020},"state":{"active":[{"name":"KEVIN GIO","outAt":1794040707281,"id":"1794040707281-m0l0zd"}],"history":[{"name":"RIVAL SAMRA","outAt":1794040707269,"inAt":1794040710289,"durationMs":3020}]}}

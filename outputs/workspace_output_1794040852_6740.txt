@@ -1,0 +1,6 @@
+{"id":"ff808181a09d98f701a1b52af33d5b0d","name":"smoketracker","createdAt":1794040853309,"data":{"active":[],"history":[]}}
+== CORS preflight ==
+vary: Access-Control-Request-Method
+vary: Access-Control-Request-Headers
+access-control-allow-origin: *
+access-control-allow-methods: PUT

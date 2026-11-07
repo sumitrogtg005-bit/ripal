@@ -1,0 +1,2 @@
+{"status": 0, "uri": "https://extendsclass.com/api/json-storage/bin/ebeabeb", "id": "ebeabeb"}
+== textdb body ==

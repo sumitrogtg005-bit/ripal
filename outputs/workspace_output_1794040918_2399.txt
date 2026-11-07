@@ -1,0 +1,4 @@
+SEDANG MEROKOK SEKARANG (DI LUAR) RIVAL SAMRA DI LUAR 00:07 menit:detik Tanggal: 07 November 2026 Keluar: 15:42:00 Durasi: < 1 mnt 🚪 Masuk RIWAYAT SELESAI
+
+=== server data ===
+{"id":"ff808181a09d98f701a1b52af33d5b0d","name":"smoketracker","data":{"active":[{"name":"RIVAL SAMRA","outAt":1794040920132,"id":"1794040920132-lqh9f"}],"history":[]}}

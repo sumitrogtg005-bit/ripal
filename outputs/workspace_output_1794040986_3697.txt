@@ -1,0 +1,3 @@
+=== server ===
+{"id":"ff808181a09d98f701a1b52af33d5b0d","name":"smoketracker","data":{"active":[{"name":"DANIEL PANGIHUTAN","outAt":1794040988886,"id":"1794040988886-de8ch"}],"history":[]}}
+SEDANG MEROKOK SEKARANG (DI LUAR) DANIEL PANGIHUTAN DI LUAR 00:08 menit:detik Tanggal: 07 November 2026 Keluar: 15:43:08 Durasi: < 1 mnt 🚪 Masuk RIWAYAT

@@ -1,0 +1,4 @@
+RIWAYAT SELESAI TANGGAL NAMA JAM KELUAR JAM MASUK DURASI Sab, 07 Nov 2026 RIVAL SAMRA 15:42:00 15:42:15 < 1 mnt Data tersimpan
+
+=== server ===
+{"id":"ff808181a09d98f701a1b52af33d5b0d","name":"smoketracker","data":{"active":[],"history":[{"name":"RIVAL SAMRA","outAt":1794040920132,"inAt":1794040935293,"durationMs":15161}]}}
